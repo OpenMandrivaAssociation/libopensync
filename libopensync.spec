@@ -10,7 +10,7 @@ Summary: 	Multi-platform PIM synchronization framework
 Version: 	%{version}
 Release: 	%{release}
 
-Source:		%{name}-%{version}.tar.gz
+Source:		%{name}-%{version}.tar.bz2
 Patch:		libopensyc-python-lib-check-lib64.patch
 URL:		http://www.opensync.org/
 License:	GPL
