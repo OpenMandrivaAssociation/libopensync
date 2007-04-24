@@ -1,5 +1,5 @@
 %define name	libopensync
-%define version	0.20
+%define version	0.22
 %define release %mkrel 1
 
 %define major	0
