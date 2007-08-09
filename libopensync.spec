@@ -1,6 +1,6 @@
 %define name	libopensync
-%define version	0.31
-%define release %mkrel 1
+%define version	0.22
+%define release %mkrel 2
 
 %define major	0
 %define libname %mklibname opensync %major
@@ -12,7 +12,7 @@ Version: 	%{version}
 Release: 	%{release}
 
 Source:		%{name}-%{version}.tar.bz2
-Patch:		libopensyc-python-lib-check-lib64.patch
+Patch:		libopensync-python-lib-check-lib64.patch
 URL:		http://www.opensync.org/
 License:	GPL
 Group:		System/Libraries
@@ -42,7 +42,8 @@ Summary: 	Header files and static libraries from %name
 Group: 		Development/C
 Requires: 	%{libname} >= %{version}
 Provides: 	opensync-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release} 
+Obsoletes: 	%name-devel
 Obsoletes:	%{libname}-devel
 
 %description -n %{develname}
@@ -86,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.%{major}*
+%{_libdir}/*.so.*
 
 %files -n %{develname}
 %defattr(-,root,root)
