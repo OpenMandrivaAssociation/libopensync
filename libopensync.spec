@@ -1,9 +1,10 @@
 %define name	libopensync
-%define version	0.22
+%define version	0.31
 %define release %mkrel 1
 
 %define major	0
 %define libname %mklibname opensync %major
+%define develname %mklibname -d opensync
 
 Name: 	 	%{name}
 Summary: 	Multi-platform PIM synchronization framework
@@ -32,21 +33,19 @@ data, including contacts, calendar, tasks, notes and files.
 %package -n 	%{libname}
 Summary:        Dynamic libraries from %name
 Group:          System/Libraries
-#Provides:	%name
-#Obsoletes:	%name = %version-%release
 
 %description -n %{libname}
 Dynamic libraries from %name.
 
-%package -n 	%{libname}-devel
+%package -n 	%{develname}
 Summary: 	Header files and static libraries from %name
 Group: 		Development/C
 Requires: 	%{libname} >= %{version}
 Provides: 	opensync-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release} 
-Obsoletes: 	%name-devel
+Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{libname}-devel
 
-%description -n %{libname}-devel
+%description -n %{develname}
 Libraries and includes files for developing programs based on %name.
 
 %package -n	%name-python
@@ -87,18 +86,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/*
 %{_libdir}/*.so
-#%{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 %files -n %name-python
 %defattr(-,root,root)
 %{python_sitearch}/*
-
-
