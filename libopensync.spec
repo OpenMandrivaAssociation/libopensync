@@ -1,27 +1,24 @@
-%define name	libopensync
-%define version	0.22
-%define release %mkrel 2
+%define with_python 1
+%{?_without_python: %{expand: %%global _with_python 0}}
 
-%define major	0
-%define libname %mklibname opensync %major
-%define develname %mklibname -d opensync
-
-Name: 	 	%{name}
-Summary: 	Multi-platform PIM synchronization framework
-Version: 	%{version}
-Release: 	%{release}
-
-Source:		%{name}-%{version}.tar.bz2
-Patch:		libopensync-python-lib-check-lib64.patch
-URL:		http://www.opensync.org/
-License:	GPL
-Group:		System/Libraries
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	bison libxml2-devel python-devel
-BuildRequires:	chrpath
-BuildRequires:	glib2-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	swig
+Name: libopensync
+Version: 0.22
+Release: %mkrel 3
+Summary: Multi-platform PIM synchronization framework
+Source: %{name}-%{version}.tar.bz2
+Patch: libopensync-python-lib-check-lib64.patch
+URL: http://www.opensync.org/
+License: GPL
+Group: System/Libraries
+BuildRoot: %{_tmppath}/%{name}-buildroot
+BuildRequires: bison 
+BuildRequires: libxml2-devel 
+BuildRequires: chrpath
+BuildRequires: glib2-devel
+BuildRequires: sqlite3-devel
+BuildRequires: pkgconfig
+BuildRequires: swig
+BuildRequires: autoconf
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -30,64 +27,41 @@ devices, a powerful sync-engine and the framework itself.  The synchronization
 framework is kept very flexible and is capable of synchronizing any type of
 data, including contacts, calendar, tasks, notes and files.
 
-%package -n 	%{libname}
-Summary:        Dynamic libraries from %name
-Group:          System/Libraries
+#-------------------------------------------------------------
+
+%define libname %mklibname opensync 0
+
+%package -n %{libname}
+Summary: Dynamic libraries from %name
+Group: System/Libraries
+Obsoletes: %{_lib}opensync
 
 %description -n %{libname}
 Dynamic libraries from %name.
 
-%package -n 	%{develname}
-Summary: 	Header files and static libraries from %name
-Group: 		Development/C
-Requires: 	%{libname} >= %{version}
-Provides: 	opensync-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release} 
-Obsoletes: 	%name-devel
-Obsoletes:	%{libname}-devel
-
-%description -n %{develname}
-Libraries and includes files for developing programs based on %name.
-
-%package -n	%name-python
-Summary:	Python binding for %name
-Group:		Development/Python
-Provides:	opensync-python
-
-%description -n %name-python
-Python bindings for %name
-
-%prep
-%setup -q
-%patch -p1
-autoconf
-
-%build
-%configure2_5x --enable-python
-%make pythondir=%{python_sitearch}
-										
-%install
-rm -rf $RPM_BUILD_ROOT
-%makeinstall_std pythondir=%{python_sitearch}
-chrpath -d %buildroot/%{_bindir}/*
-chrpath -d %buildroot/%{_libdir}/*.so.%major.?.?
-chrpath -d %buildroot/%{python_sitearch}/_opensync.so
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
 
-%files
+%files -n %{libname}
 %defattr(-,root,root)
 %{_bindir}/*
 %{_libdir}/opensync
 %{_libdir}/osplugin
+%{_libdir}/*.so.*
 
-%files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/*.so.%{major}*
+#-------------------------------------------------------------
+
+%define develname %mklibname -d opensync
+
+%package -n %{develname}
+Summary: Header files and static libraries from %name
+Group: Development/C
+Requires: %{libname} = %{version}
+Provides: opensync-devel
+Obsoletes: %{libname}-devel
+
+%description -n %{develname}
+Libraries and includes files for developing programs based on %name.
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -96,6 +70,50 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
+#-------------------------------------------------------------
+
+%if %{with_python}
+
+%package -n	%name-python
+Summary: Python bindings for %name
+Group: Development/Python
+Provides: opensync-python
+%py_requires -d
+
+%description -n %name-python
+Python bindings for %name
+
 %files -n %name-python
 %defattr(-,root,root)
 %{python_sitearch}/*
+
+%endif
+
+#-------------------------------------------------------------
+
+%prep
+%setup -q
+%patch -p1
+
+
+%build
+aclocal && libtoolize -c -f && autoheader && automake -a -c && autoconf
+
+%configure2_5x \
+%if %{with_python}
+    --enable-python \
+%endif
+    --disable-debug \
+    --enable-engine \
+    --enable-tools
+
+%make pythondir=%{python_sitearch}
+										
+%install
+rm -rf $RPM_BUILD_ROOT
+
+%makeinstall_std pythondir=%{python_sitearch}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
