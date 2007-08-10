@@ -3,7 +3,7 @@
 
 Name: libopensync
 Version: 0.22
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Multi-platform PIM synchronization framework
 Source: %{name}-%{version}.tar.bz2
 Patch: libopensync-python-lib-check-lib64.patch
@@ -59,6 +59,7 @@ Group: Development/C
 Requires: %{libname} = %{version}
 Provides: opensync-devel
 Obsoletes: %{libname}-devel
+Provides: libopensync-devel = %version
 
 %description -n %{develname}
 Libraries and includes files for developing programs based on %name.
@@ -97,7 +98,7 @@ Python bindings for %name
 
 
 %build
-aclocal && libtoolize -c -f && autoheader && automake -a -c && autoconf
+autoreconf -if
 
 %configure2_5x \
 %if %{with_python}
