@@ -75,7 +75,7 @@ Libraries and includes files for developing programs based on %name.
 %setup -q
 
 %build
-scons prefix=%{_prefix} libsuffix=%{_lib}
+scons prefix=%{_prefix} libsuffix=%{_lib} APPEND_CCFLAGS="%{optflags}"
 										
 %install
 rm -rf $RPM_BUILD_ROOT
