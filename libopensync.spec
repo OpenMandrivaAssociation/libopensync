@@ -1,12 +1,8 @@
-%define with_python 1
-%{?_without_python: %{expand: %%global _with_python 0}}
-
 Name: libopensync
 Version: 0.33
 Release: %mkrel 1
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
-Patch: libopensync-python-lib-check-lib64.patch
 URL: http://www.opensync.org/
 License: GPL
 Group: System/Libraries
@@ -18,7 +14,7 @@ BuildRequires: glib2-devel
 BuildRequires: sqlite3-devel
 BuildRequires: pkgconfig
 BuildRequires: swig
-BuildRequires: autoconf
+BuildRequires: scons
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -27,14 +23,21 @@ devices, a powerful sync-engine and the framework itself.  The synchronization
 framework is kept very flexible and is capable of synchronizing any type of
 data, including contacts, calendar, tasks, notes and files.
 
+%files
+%defattr(-,root,root)
+%{_bindir}/*
+%{_datadir}/opensync
+
 #-------------------------------------------------------------
 
-%define libname %mklibname opensync 0
+%define major 1.0.0
+%define libname %mklibname opensync %major
 
 %package -n %{libname}
 Summary: Dynamic libraries from %name
 Group: System/Libraries
 Obsoletes: %{_lib}opensync
+Requires: %name = %version-%release
 
 %description -n %{libname}
 Dynamic libraries from %name.
@@ -44,10 +47,8 @@ Dynamic libraries from %name.
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_bindir}/*
 %{_libdir}/opensync
-%{_libdir}/osplugin
-%{_libdir}/*.so.*
+%{_libdir}/libopensync.so.%{major}*
 
 #-------------------------------------------------------------
 
@@ -66,55 +67,23 @@ Libraries and includes files for developing programs based on %name.
 
 %files -n %{develname}
 %defattr(-,root,root)
-%{_includedir}/*
+%{_includedir}/opensync-1.0
 %{_libdir}/*.so
-%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
-
-#-------------------------------------------------------------
-
-%if %{with_python}
-
-%package -n	%name-python
-Summary: Python bindings for %name
-Group: Development/Python
-Provides: opensync-python
-%py_requires -d
-
-%description -n %name-python
-Python bindings for %name
-
-%files -n %name-python
-%defattr(-,root,root)
-%{python_sitearch}/*
-
-%endif
-
-#-------------------------------------------------------------
 
 %prep
 %setup -q
-#%patch -p1
-
 
 %build
-autoreconf -if
-
-%configure2_5x \
-%if %{with_python}
-    --enable-python \
-%endif
-    --disable-debug \
-    --enable-engine \
-    --enable-tools
-
-%make pythondir=%{python_sitearch}
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export FFLAGS="%{optflags}"
+export APPEND_CCFLAGS="%{optflags}"
+scons prefix=%{_prefix}
 										
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%makeinstall_std pythondir=%{python_sitearch}
+scons install DESTDIR=%{buildroot}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
