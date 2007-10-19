@@ -1,10 +1,10 @@
 Name: libopensync
 Version: 0.33
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 URL: http://www.opensync.org/
-License: GPL
+License: LGPLv2.1
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: bison 
@@ -15,6 +15,7 @@ BuildRequires: sqlite3-devel
 BuildRequires: pkgconfig
 BuildRequires: swig
 BuildRequires: scons
+Conflicts: %mklibname opensync 0
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -74,10 +75,6 @@ Libraries and includes files for developing programs based on %name.
 %setup -q
 
 %build
-export CFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-export FFLAGS="%{optflags}"
-export APPEND_CCFLAGS="%{optflags}"
 scons prefix=%{_prefix} libsuffix=%{_lib}
 										
 %install
