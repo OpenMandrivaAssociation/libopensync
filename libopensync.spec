@@ -56,10 +56,10 @@ Dynamic libraries from %name.
 %package -n %{develname}
 Summary: Header files and static libraries from %name
 Group: Development/C
-Requires: %{libname} = %{version}
-Provides: opensync-devel
+Requires: %{libname} = %{version}-%{release}
+Provides: opensync-devel = %{version}-%{release}
 Obsoletes: %mklibname -d %name 0
-Provides: libopensync-devel = %version
+Provides: libopensync-devel = %version-%{release}
 
 %description -n %{develname}
 Libraries and includes files for developing programs based on %name.
