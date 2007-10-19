@@ -1,6 +1,6 @@
 Name: libopensync
 Version: 0.33
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 URL: http://www.opensync.org/
@@ -36,7 +36,6 @@ data, including contacts, calendar, tasks, notes and files.
 %package -n %{libname}
 Summary: Dynamic libraries from %name
 Group: System/Libraries
-Obsoletes: %{_lib}opensync
 Requires: %name = %version-%release
 
 %description -n %{libname}
