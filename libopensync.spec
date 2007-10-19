@@ -79,7 +79,7 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 export FFLAGS="%{optflags}"
 export APPEND_CCFLAGS="%{optflags}"
-scons prefix=%{_prefix}
+scons prefix=%{_prefix} libsuffix=%{_lib}
 										
 %install
 rm -rf $RPM_BUILD_ROOT
