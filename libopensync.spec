@@ -1,6 +1,6 @@
 Name: libopensync
 Version: 0.33
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 URL: http://www.opensync.org/
@@ -71,11 +71,28 @@ Libraries and includes files for developing programs based on %name.
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
+#-------------------------------------------------------------
+
+%package python 
+Summary: Python bindings for %name 
+Group: Development/Python 
+Provides: opensync-python = %version-%release
+%py_requires -d
+ 
+%description python 
+Python bindings for %name 
+ 
+%files python 
+%defattr(-,root,root) 
+%{python_sitearch}/*
+
+#-------------------------------------------------------------
+
 %prep
 %setup -q
 
 %build
-scons prefix=%{_prefix} libsuffix=%{_lib} APPEND_CCFLAGS="%{optflags}"
+scons prefix=%{_prefix} libsuffix=%{_lib} APPEND_CCFLAGS="%{optflags}" enable_python=yes
 										
 %install
 rm -rf $RPM_BUILD_ROOT
