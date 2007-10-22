@@ -1,6 +1,6 @@
 Name: libopensync
 Version: 0.33
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 URL: http://www.opensync.org/
@@ -16,6 +16,7 @@ BuildRequires: pkgconfig
 BuildRequires: swig
 BuildRequires: scons
 Conflicts: %mklibname opensync 0
+Obsoletes: %mklibname opensync 0
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
