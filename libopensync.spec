@@ -3,6 +3,7 @@ Version: 0.34
 Release: %mkrel 1
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
+Patch1: libopensync-0.34-fix-python-wrapper-build.patch
 URL: http://www.opensync.org/
 License: LGPLv2.1+
 Group: System/Libraries
@@ -15,7 +16,6 @@ BuildRequires: sqlite3-devel
 BuildRequires: pkgconfig
 BuildRequires: swig
 BuildRequires: cmake
-Conflicts: %mklibname opensync 0
 Obsoletes: %mklibname opensync 0
 
 %description
@@ -39,7 +39,6 @@ data, including contacts, calendar, tasks, notes and files.
 Summary: Dynamic libraries from %name
 Group: System/Libraries
 Requires: %name = %version-%release
-Obsoletes: %mklibname opensync 1.0.0
 
 %description -n %{libname}
 Dynamic libraries from %name.
@@ -92,6 +91,7 @@ Python bindings for %name
 
 %prep
 %setup -q
+%patch1 -p0 -b .orig
 
 %build
 %cmake
