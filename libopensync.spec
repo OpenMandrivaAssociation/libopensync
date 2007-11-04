@@ -1,10 +1,10 @@
 Name: libopensync
-Version: 0.33
-Release: %mkrel 5
+Version: 0.34
+Release: %mkrel 1
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 URL: http://www.opensync.org/
-License: LGPLv2.1
+License: LGPLv2.1+
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: bison 
@@ -14,7 +14,7 @@ BuildRequires: glib2-devel
 BuildRequires: sqlite3-devel
 BuildRequires: pkgconfig
 BuildRequires: swig
-BuildRequires: scons
+BuildRequires: cmake
 Conflicts: %mklibname opensync 0
 Obsoletes: %mklibname opensync 0
 
@@ -93,11 +93,13 @@ Python bindings for %name
 %setup -q
 
 %build
-scons prefix=%{_prefix} libsuffix=%{_lib} APPEND_CCFLAGS="%{optflags}" enable_python=yes
-										
+%cmake
+%make
+
 %install
 rm -rf $RPM_BUILD_ROOT
-scons install DESTDIR=%{buildroot}
+cd build
+%makeinstall_std
 
 %clean
 rm -rf $RPM_BUILD_ROOT
