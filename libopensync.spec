@@ -32,13 +32,14 @@ data, including contacts, calendar, tasks, notes and files.
 
 #-------------------------------------------------------------
 
-%define major 1.0.0
+%define major 1
 %define libname %mklibname opensync %major
 
 %package -n %{libname}
 Summary: Dynamic libraries from %name
 Group: System/Libraries
 Requires: %name = %version-%release
+Obsoletes: %mklibname opensync 1.0.0
 
 %description -n %{libname}
 Dynamic libraries from %name.
