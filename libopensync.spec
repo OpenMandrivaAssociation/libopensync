@@ -1,6 +1,6 @@
 Name: libopensync
 Version: 0.34
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 Patch1: libopensync-0.34-fix-python-wrapper-build.patch
@@ -38,6 +38,7 @@ data, including contacts, calendar, tasks, notes and files.
 %package -n %{libname}
 Summary: Dynamic libraries from %name
 Group: System/Libraries
+Obsoletes: %mklibname opensync 1.0.0
 Requires: %name = %version-%release
 
 %description -n %{libname}
