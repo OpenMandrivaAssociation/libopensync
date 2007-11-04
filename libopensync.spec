@@ -60,7 +60,7 @@ Summary: Header files and static libraries from %name
 Group: Development/C
 Requires: %{libname} = %{version}-%{release}
 Provides: opensync-devel = %{version}-%{release}
-Obsoletes: %mklibname -d %name 0
+Obsoletes: %mklibname -d opensync 0
 Provides: libopensync-devel = %version-%{release}
 
 %description -n %{develname}
