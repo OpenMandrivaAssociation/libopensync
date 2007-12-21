@@ -7,6 +7,7 @@ Patch1: libopensync-0.34-fix-python-wrapper-build.patch
 URL: http://www.opensync.org/
 License: LGPLv2.1+
 Group: System/Libraries
+BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: bison 
 BuildRequires: libxml2-devel 
 BuildRequires: chrpath
