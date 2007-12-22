@@ -1,9 +1,9 @@
 Name: libopensync
-Version: 0.34
-Release: %mkrel 2
+Version: 0.35
+Release: %mkrel 1
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
-Patch1: libopensync-0.34-fix-python-wrapper-build.patch
+Patch1: libopensync-0.35-fix-python-wrapper-build.patch
 URL: http://www.opensync.org/
 License: LGPLv2.1+
 Group: System/Libraries
@@ -28,7 +28,7 @@ data, including contacts, calendar, tasks, notes and files.
 %files
 %defattr(-,root,root)
 %{_bindir}/*
-%{_datadir}/opensync
+%{_datadir}/opensync-1.0
 
 #-------------------------------------------------------------
 
@@ -49,7 +49,7 @@ Dynamic libraries from %name.
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/opensync
+%{_libdir}/opensync-1.0
 %{_libdir}/libopensync.so.%{major}*
 
 #-------------------------------------------------------------
