@@ -86,7 +86,7 @@ Python bindings for %name
  
 %files python 
 %defattr(-,root,root) 
-%{python_sitearch}/*
+%{py_platsitedir}/*
 
 #-------------------------------------------------------------
 
