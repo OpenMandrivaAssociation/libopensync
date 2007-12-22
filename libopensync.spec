@@ -29,6 +29,8 @@ data, including contacts, calendar, tasks, notes and files.
 %defattr(-,root,root)
 %{_bindir}/*
 %{_datadir}/opensync-1.0
+%dir %{_prefix}/lib/opensync-1.0
+%{_prefix}/lib/opensync-1.0/osplugin
 
 #-------------------------------------------------------------
 
@@ -49,7 +51,8 @@ Dynamic libraries from %name.
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/opensync-1.0
+%dir %{_libdir}/opensync-1.0
+%{_libdir}/opensync-1.0/formats
 %{_libdir}/libopensync.so.%{major}*
 
 #-------------------------------------------------------------
