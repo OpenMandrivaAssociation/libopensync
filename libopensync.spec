@@ -29,6 +29,19 @@ data, including contacts, calendar, tasks, notes and files.
 %defattr(-,root,root)
 %{_bindir}/*
 %{_datadir}/opensync-1.0
+
+#-------------------------------------------------------------
+
+%package ipc
+Summary: OpenSync IPC Plugin
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description ipc
+OpenSync IPC Plugin.
+
+%files ipc
+%defattr(-,root,root)
 %dir %{_prefix}/lib/opensync-1.0
 %{_prefix}/lib/opensync-1.0/osplugin
 
@@ -98,7 +111,8 @@ Python bindings for %name
 %patch1 -p0 -b .orig
 
 %build
-%cmake
+%cmake \
+	-DLIBEXEC_INSTALL_DIR=%{_libexecdir}
 %make
 
 %install
