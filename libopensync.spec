@@ -1,6 +1,6 @@
 Name: libopensync
 Version: 0.35
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 Patch1: libopensync-0.35-fix-python-wrapper-build.patch
@@ -16,7 +16,6 @@ BuildRequires: sqlite3-devel
 BuildRequires: pkgconfig
 BuildRequires: swig
 BuildRequires: cmake
-Obsoletes: %mklibname opensync 0
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -77,7 +76,6 @@ Summary: Header files and static libraries from %name
 Group: Development/C
 Requires: %{libname} = %{version}-%{release}
 Provides: opensync-devel = %{version}-%{release}
-Obsoletes: %mklibname -d opensync 0
 Provides: libopensync-devel = %version-%{release}
 
 %description -n %{develname}
