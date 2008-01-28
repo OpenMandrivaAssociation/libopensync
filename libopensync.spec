@@ -1,6 +1,6 @@
 Name: libopensync
-Version: 0.35
-Release: %mkrel 2
+Version: 0.36
+Release: %mkrel 1
 Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 Patch1: libopensync-0.35-fix-python-wrapper-build.patch
