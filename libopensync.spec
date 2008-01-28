@@ -5,7 +5,7 @@ Summary: Multi-platform PIM synchronization framework
 Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
 Patch1: libopensync-0.35-fix-python-wrapper-build.patch
 URL: http://www.opensync.org/
-License: LGPLv2.1+
+License: LGPLv2+
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: bison 
@@ -41,8 +41,8 @@ OpenSync IPC Plugin.
 
 %files ipc
 %defattr(-,root,root)
-%dir %{_prefix}/lib/opensync-1.0
-%{_prefix}/lib/opensync-1.0/osplugin
+%dir %{_libexecdir}/opensync-1.0
+%{_libexecdir}/opensync-1.0/osplugin
 
 #-------------------------------------------------------------
 
