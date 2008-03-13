@@ -1,25 +1,41 @@
-Name: libopensync
-Version: 0.36
-Release: %mkrel 1
-Summary: Multi-platform PIM synchronization framework
-Source: http://www.opensync.org/download/releases/%version/%name-%version.tar.bz2
-Patch1: libopensync-0.35-fix-python-wrapper-build.patch
-URL: http://www.opensync.org/
-License: LGPLv2+
-Group: System/Libraries
-BuildRoot: %{_tmppath}/%{name}-buildroot
-BuildRequires: bison 
-BuildRequires: libxml2-devel 
-BuildRequires: chrpath
-BuildRequires: glib2-devel
-BuildRequires: sqlite3-devel
-BuildRequires: pkgconfig
-BuildRequires: swig
-BuildRequires: cmake
+# If you are thinking of upgrading opensync to 0.3x, please be
+# prepared to justify yourself to those who actually use it. i.e.,
+# you are going to need to prove that it's a) better, b) works, and
+# c) won't eat anyone's data, or else be prepared to lose some major
+# appendages. - AdamW 2008/03
+
+%define major		0
+%define libname		%mklibname opensync %major
+%define develname	%mklibname opensync -d
+
+%define with_python 1
+%{?_without_python: %{expand: %%global _with_python 0}}
+
+Name:		libopensync
+Version:	0.22
+Epoch:		1
+Release:	%{mkrel 7}
+Summary:	Multi-platform PIM synchronization framework
+Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
+Patch0:		libopensync-python-lib-check-lib64.patch
+URL:		http://www.opensync.org/
+License:	GPLv2+
+Group:		System/Libraries
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	bison 
+BuildRequires:	libxml2-devel 
+BuildRequires:	chrpath
+BuildRequires:	glib2-devel
+BuildRequires:	sqlite3-devel
+BuildRequires:	pkgconfig
+BuildRequires:	swig
+BuildRequires:	autoconf
+Obsoletes:	opensync0 < 0.22-7
+Conflicts:	%{mklibname opensync 0} < 0.22-7
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
-independent.  It consists of several plugins that can be used to connect to
+independent. It consists of several plugins that can be used to connect to
 devices, a powerful sync-engine and the framework itself.  The synchronization
 framework is kept very flexible and is capable of synchronizing any type of
 data, including contacts, calendar, tasks, notes and files.
@@ -27,96 +43,100 @@ data, including contacts, calendar, tasks, notes and files.
 %files
 %defattr(-,root,root)
 %{_bindir}/*
-%{_datadir}/opensync-1.0
+%{_libdir}/opensync
 
 #-------------------------------------------------------------
 
 %package ipc
-Summary: OpenSync IPC Plugin
-Group: System/Libraries
-Requires: %name = %version-%release
+Summary:	OpenSync IPC plug-in
+Group:		System/Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description ipc
 OpenSync IPC Plugin.
 
 %files ipc
 %defattr(-,root,root)
-%dir %{_libexecdir}/opensync-1.0
-%{_libexecdir}/opensync-1.0/osplugin
+%{_libdir}/osplugin
 
 #-------------------------------------------------------------
 
-%define major 1
-%define libname %mklibname opensync %major
-
 %package -n %{libname}
-Summary: Dynamic libraries from %name
-Group: System/Libraries
-Obsoletes: %mklibname opensync 1.0.0
-Requires: %name = %version-%release
+Summary:	Dynamic libraries from %{name}
+Epoch:		0
+Group:		System/Libraries
+Conflicts:	opensync0 < 0.22-7
 
 %description -n %{libname}
-Dynamic libraries from %name.
+Dynamic libraries from %{name}.
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
 
 %files -n %{libname}
 %defattr(-,root,root)
-%dir %{_libdir}/opensync-1.0
-%{_libdir}/opensync-1.0/formats
-%{_libdir}/libopensync.so.%{major}*
+%{_libdir}/*.so.%{major}*
 
 #-------------------------------------------------------------
 
-%define develname %mklibname -d opensync
-
 %package -n %{develname}
-Summary: Header files and static libraries from %name
-Group: Development/C
-Requires: %{libname} = %{version}-%{release}
-Provides: opensync-devel = %{version}-%{release}
-Provides: libopensync-devel = %version-%{release}
+Summary:	Header files and static libraries from %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}
+Provides:	%{name}-devel = %{version}
+Obsoletes:	%{mklibname -d opensync 0} < 0.22-7
 
 %description -n %{develname}
-Libraries and includes files for developing programs based on %name.
+Libraries and includes files for developing programs based on %{name}.
 
 %files -n %{develname}
 %defattr(-,root,root)
-%{_includedir}/opensync-1.0
+%{_includedir}/*
 %{_libdir}/*.so
+%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 #-------------------------------------------------------------
 
-%package python 
-Summary: Python bindings for %name 
-Group: Development/Python 
-Provides: opensync-python = %version-%release
+%if %{with_python}
+
+%package python
+Summary:	Python bindings for %{name}
+Group:		Development/Python
+Obsoletes:	opensync0-python < 0.22-7
 %py_requires -d
- 
-%description python 
-Python bindings for %name 
- 
-%files python 
-%defattr(-,root,root) 
+
+%description python
+Python bindings for %{name}.
+
+%files python
+%defattr(-,root,root)
 %{py_platsitedir}/*
+
+%endif
 
 #-------------------------------------------------------------
 
 %prep
 %setup -q
-%patch1 -p0 -b .orig
+%patch -p1
 
 %build
-%cmake \
-	-DLIBEXEC_INSTALL_DIR=%{_libexecdir}
-%make
+autoreconf -if
 
+%configure2_5x \
+%if %{with_python}
+    --enable-python \
+%endif
+    --disable-debug \
+    --enable-engine \
+    --enable-tools
+
+%make pythondir=%{py_platsitedir}
+										
 %install
-rm -rf $RPM_BUILD_ROOT
-cd build
-%makeinstall_std
+rm -rf %{buildroot}
+%makeinstall_std pythondir=%{py_platsitedir}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
