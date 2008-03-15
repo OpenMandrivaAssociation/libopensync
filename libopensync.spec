@@ -14,7 +14,7 @@
 Name:		libopensync
 Version:	0.22
 Epoch:		1
-Release:	%{mkrel 7}
+Release:	%{mkrel 8}
 Summary:	Multi-platform PIM synchronization framework
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		libopensync-python-lib-check-lib64.patch
@@ -31,6 +31,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	swig
 BuildRequires:	autoconf
 Obsoletes:	opensync0 < 0.22-7
+Obsoletes:	libopensync-ipc < 0.22-8
+Conflicts:	libopensync-ipc < 0.22-8
 Conflicts:	%{mklibname opensync 0} < 0.22-7
 
 %description
@@ -44,22 +46,9 @@ data, including contacts, calendar, tasks, notes and files.
 %defattr(-,root,root)
 %{_bindir}/*
 %{_libdir}/opensync
-
-#-------------------------------------------------------------
-
-%package ipc
-Summary:	OpenSync IPC plug-in
-Group:		System/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description ipc
-OpenSync IPC Plugin.
-
-%files ipc
-%defattr(-,root,root)
 %{_libdir}/osplugin
 
-#-------------------------------------------------------------
+#--------------------------------------------------------
 
 %package -n %{libname}
 Summary:	Dynamic libraries from %{name}
@@ -119,7 +108,7 @@ Python bindings for %{name}.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
 
 %build
 autoreconf -if
