@@ -14,7 +14,7 @@
 Name:		libopensync
 Version:	0.22
 Epoch:		1
-Release:	%{mkrel 8}
+Release:	%{mkrel 9}
 Summary:	Multi-platform PIM synchronization framework
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		libopensync-python-lib-check-lib64.patch
@@ -34,6 +34,7 @@ Obsoletes:	opensync0 < 0.22-7
 Obsoletes:	libopensync-ipc < 0.22-8
 Conflicts:	libopensync-ipc < 0.22-8
 Conflicts:	%{mklibname opensync 0} < 0.22-7
+Obsoletes:	%{mklibname opensync 1} <= 0.36-1
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
