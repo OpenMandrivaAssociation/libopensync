@@ -14,14 +14,14 @@
 Name:		libopensync
 Version:	0.22
 Epoch:		1
-Release:	%{mkrel 9}
+Release:	%mkrel 10
 Summary:	Multi-platform PIM synchronization framework
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		libopensync-python-lib-check-lib64.patch
+Patch1:		libopensync-linkage_fix.diff
 URL:		http://www.opensync.org/
 License:	GPLv2+
 Group:		System/Libraries
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	bison 
 BuildRequires:	libxml2-devel 
 BuildRequires:	chrpath
@@ -35,6 +35,7 @@ Obsoletes:	libopensync-ipc < 0.22-8
 Conflicts:	libopensync-ipc < 0.22-8
 Conflicts:	%{mklibname opensync 0} < 0.22-7
 Obsoletes:	%{mklibname opensync 1} <= 0.36-1
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -114,9 +115,10 @@ Python bindings for %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
-autoreconf -if
+autoreconf -fis
 
 %configure2_5x \
 %if %{with_python}
