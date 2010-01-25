@@ -14,16 +14,18 @@
 Name:		libopensync
 Version:	0.22
 Epoch:		1
-Release:	%mkrel 12
+Release:	%mkrel 14
 Summary:	Multi-platform PIM synchronization framework
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
+Source1:	opensync.py
 Patch0:		libopensync-python-lib-check-lib64.patch
 Patch1:		libopensync-linkage_fix.diff
+Patch2:		libopensync-python-fix.patch
 URL:		http://www.opensync.org/
 License:	GPLv2+
 Group:		System/Libraries
-BuildRequires:	bison 
-BuildRequires:	libxml2-devel 
+BuildRequires:	bison
+BuildRequires:	libxml2-devel
 BuildRequires:	chrpath
 BuildRequires:	glib2-devel
 BuildRequires:	sqlite3-devel
@@ -116,6 +118,7 @@ Python bindings for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p0
+%patch2 -p0
 
 %build
 autoreconf -fis
@@ -133,6 +136,10 @@ autoreconf -fis
 %install
 rm -rf %{buildroot}
 %makeinstall_std pythondir=%{py_platsitedir}
+
+#provide fixed opensync.py, patch doesn't exist on source (#54931)
+rm -f %{buildroot}%{py_platsitedir}/opensync.py
+install %{SOURCE1} %{buildroot}%{py_platsitedir}/opensync.py
 
 %clean
 rm -rf %{buildroot}
