@@ -22,6 +22,7 @@ Patch0:		libopensync-python-lib-check-lib64.patch
 Patch1:		libopensync-linkage_fix.diff
 Patch2:		libopensync-python-fix.patch
 Patch3:		libopensync-swig-fix.patch
+Patch4:		libopensync-0.22-unusedvar.patch
 URL:		http://www.opensync.org/
 License:	GPLv2+
 Group:		System/Libraries
@@ -121,9 +122,10 @@ Python bindings for %{name}.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 %build
-autoreconf -fis
+autoreconf -fi
 
 %configure2_5x \
 %if %{with_python}
