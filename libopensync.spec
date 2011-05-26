@@ -14,7 +14,7 @@
 Name:		libopensync
 Version:	0.22
 Epoch:		1
-Release:	%mkrel 17
+Release:	%mkrel 18
 Summary:	Multi-platform PIM synchronization framework
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 #Source1:	opensync.py
@@ -23,6 +23,7 @@ Patch1:		libopensync-linkage_fix.diff
 Patch2:		libopensync-python-fix.patch
 Patch3:		libopensync-swig-fix.patch
 Patch4:		libopensync-0.22-unusedvar.patch
+Patch5:         libopensync-swig-fix2.patch
 URL:		http://www.opensync.org/
 License:	GPLv2+
 Group:		System/Libraries
@@ -123,7 +124,7 @@ Python bindings for %{name}.
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
-
+%patch5 -p1
 %build
 autoreconf -fi
 
