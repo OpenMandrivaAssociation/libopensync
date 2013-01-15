@@ -1,0 +1,19 @@
+--- libopensync-0.22/configure.in.bero	2013-01-16 00:32:09.590526288 +0100
++++ libopensync-0.22/configure.in	2013-01-16 00:32:18.860416306 +0100
+@@ -4,7 +4,7 @@ AC_PREREQ(2.58)
+ AC_INIT(OpenSync, 0.22, [], libopensync)
+ AC_CONFIG_SRCDIR([opensync/opensync.h])
+ AM_INIT_AUTOMAKE(foreign)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS([config.h])
+ 
+ #### Defaults #####
+ WITH_DEBUG=yes
+@@ -16,7 +16,6 @@ WITH_PROF=no
+ 
+ AC_ISC_POSIX
+ AC_PROG_CC
+-AM_PROG_CC_STDC
+ AC_HEADER_STDC
+ AC_DISABLE_STATIC
+ AC_PROG_LIBTOOL

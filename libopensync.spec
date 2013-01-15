@@ -27,6 +27,7 @@ Patch2:		libopensync-python-fix.patch
 Patch3:		libopensync-swig-fix.patch
 Patch4:		libopensync-0.22-unusedvar.patch
 Patch5:		libopensync-swig-fix2.patch
+Patch6:		libopensync-automake-1.13.patch
 
 BuildRequires:	bison
 BuildRequires:	chrpath
@@ -103,6 +104,7 @@ Python bindings for %{name}.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1 -b .am113~
 
 %build
 autoreconf -fi
