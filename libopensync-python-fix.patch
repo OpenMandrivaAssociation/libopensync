@@ -1,5 +1,5 @@
---- wrapper/Makefile.am.orig	2009-03-25 20:01:41.000000000 +0100
-+++ wrapper/Makefile.am	2009-03-25 20:02:21.000000000 +0100
+--- ./wrapper/Makefile.am.orig	2009-03-25 20:01:41.000000000 +0100
++++ ./wrapper/Makefile.am	2009-03-25 20:02:21.000000000 +0100
 @@ -1,10 +1,10 @@
  
 -AM_CFLAGS = -Werror
@@ -13,8 +13,8 @@
  
  EXTRA_DIST = opensync.i
  
---- wrapper/Makefile.in.orig	2009-03-25 20:01:48.000000000 +0100
-+++ wrapper/Makefile.in	2009-03-25 20:02:11.000000000 +0100
+--- ./wrapper/Makefile.in.orig	2009-03-25 20:01:48.000000000 +0100
++++ ./wrapper/Makefile.in	2009-03-25 20:02:11.000000000 +0100
 @@ -228,7 +228,7 @@
  sharedstatedir = @sharedstatedir@
  sysconfdir = @sysconfdir@
