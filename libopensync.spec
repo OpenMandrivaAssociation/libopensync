@@ -55,7 +55,7 @@ Dynamic libraries from %{name}.
 %package -n %{libxml}
 Summary:	Dynamic libraries from %{name}
 Group:		System/Libraries
-Conflicts:	%{_lib}opensync0 < 0:0.22-22
+Conflicts:	%{_lib}opensync0 < 1:0.22-22
 
 %description -n %{libxml}
 Dynamic libraries from %{name}.
@@ -63,7 +63,7 @@ Dynamic libraries from %{name}.
 %package -n %{libosengine}
 Summary:	Dynamic libraries from %{name}
 Group:		System/Libraries
-Conflicts:	%{_lib}opensync0 < 0:0.22-22
+Conflicts:	%{_lib}opensync0 < 1:0.22-22
 
 %description -n %{libosengine}
 Dynamic libraries from %{name}.
@@ -71,10 +71,10 @@ Dynamic libraries from %{name}.
 %package -n %{devname}
 Summary:	Header files and static libraries from %{name}
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libxml} = %{version}-%{release}
-Requires:	%{libosengine} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Requires:	%{libxml} = %{EVRD}
+Requires:	%{libosengine} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{devname}
 Libraries and includes files for developing programs based on %{name}.
