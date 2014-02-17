@@ -84,7 +84,7 @@ Libraries and includes files for developing programs based on %{name}.
 %package python
 Summary:	Python bindings for %{name}
 Group:		Development/Python
-%py_requires -d
+#%py_requires -d
 
 %description python
 Python bindings for %{name}.
