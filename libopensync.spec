@@ -37,7 +37,6 @@ BuildRequires:	swig
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(sqlite3)
-BuildRequires:	pkgconfig(python-2.7)
 
 %description
 OpenSync is a synchronization framework that is platform and distribution
@@ -84,6 +83,7 @@ Libraries and includes files for developing programs based on %{name}.
 %package python
 Summary:	Python bindings for %{name}
 Group:		Development/Python
+BuildRequires:	pkgconfig(python-2.7)
 #%py_requires -d
 
 %description python
