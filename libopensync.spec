@@ -117,7 +117,7 @@ export CFLAGS="%{optflags} -Wno-error"
 %files
 %{_bindir}/*
 %{_libdir}/opensync
-%{_libdir}/osplugin
+%{_libexecdir}/osplugin
 
 %files -n %{libname}
 %{_libdir}/libopensync.so.%{major}*
