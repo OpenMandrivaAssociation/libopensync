@@ -83,8 +83,7 @@ Libraries and includes files for developing programs based on %{name}.
 %package python
 Summary:	Python bindings for %{name}
 Group:		Development/Python
-BuildRequires:	pkgconfig(python-2.7)
-#%py_requires -d
+BuildRequires:	python-devel
 
 %description python
 Python bindings for %{name}.
