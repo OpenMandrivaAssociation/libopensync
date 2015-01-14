@@ -83,18 +83,20 @@ Libraries and includes files for developing programs based on %{name}.
 %package python
 Summary:	Python bindings for %{name}
 Group:		Development/Python
-BuildRequires: python-devel
+BuildRequires: pkgconfig(python2)
 
 %description python
 Python bindings for %{name}.
 
 %files python
-%{py_platsitedir}/*
+%{py2_platsitedir}/*
 %endif
 
 %prep
 %setup -q
 %apply_patches
+# Fixup expected version of SWIG:
+sed -i -e "s|AC_PROG_SWIG(2.0.3)|AC_PROG_SWIG(3.0.0)|" configure.in
 autoreconf -fi
 
 %build
