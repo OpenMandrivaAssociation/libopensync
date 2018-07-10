@@ -17,7 +17,7 @@ Summary:	Multi-platform PIM synchronization framework
 Name:		libopensync
 Epoch:		1
 Version:	0.22
-Release:	30
+Release:	31
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://www.opensync.org/
