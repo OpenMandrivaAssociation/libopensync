@@ -20,7 +20,7 @@ Version:	0.22
 Release:	33
 License:	GPLv2+
 Group:		System/Libraries
-Url:		http://www.opensync.org/
+Url:		https://www.opensync.org/
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 #Source1:	opensync.py
 Patch0:		libopensync-python-lib-check-lib64.patch
