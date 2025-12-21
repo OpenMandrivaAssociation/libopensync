@@ -31,6 +31,11 @@ Patch4:		libopensync-0.22-unusedvar.patch
 Patch5:		libopensync-swig-fix2.patch
 Patch6:		libopensync-automake-1.13.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	bison
 BuildRequires:	chrpath
 BuildRequires:	swig
