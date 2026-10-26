@@ -13,6 +13,9 @@
 # The LTO configure workaround rewrites this ancient libtool script into a
 # command that starts with -e, so the shared library is never produced.
 %global _disable_lto 1
+# Format modules call osync_* from the host process and are not linked to
+# libopensync, so --no-undefined cannot be satisfied.
+%global _disable_ld_no_undefined 1
 
 # The bindings look for Python 2.7, which Cooker no longer has.
 %define with_python 0
