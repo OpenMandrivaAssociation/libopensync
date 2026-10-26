@@ -112,7 +112,9 @@ sed -i -e "s|AC_PROG_SWIG(2.0.3)|AC_PROG_SWIG(3.0.0)|" configure.in
 autoreconf -fi
 
 %build
-export CFLAGS="%{optflags} -Wno-error"
+# C23 rejects the old implicit free() and autoconf appends -std=gnu23 to CC.
+export ac_cv_prog_cc_c23='none needed'
+export CFLAGS="%{optflags} -Wno-error -std=gnu17 -include stdlib.h"
 export PYTHON=python
 %configure2_5x \
 	--disable-static \
