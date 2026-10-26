@@ -112,8 +112,10 @@ sed -i -e "s|AC_PROG_SWIG(2.0.3)|AC_PROG_SWIG(3.0.0)|" configure.in
 autoreconf -fi
 
 %build
-# C23 rejects the old implicit free() and autoconf appends -std=gnu23 to CC.
-export ac_cv_prog_cc_c23='none needed'
+# C23 rejects the old implicit free(). An empty cache value means the
+# compiler already has the C dialect we want. The words "none needed"
+# are appended to CC.
+export ac_cv_prog_cc_c23=
 export CFLAGS="%{optflags} -Wno-error -std=gnu17 -include stdlib.h"
 export PYTHON=python
 %configure2_5x \
