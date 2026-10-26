@@ -35,6 +35,7 @@ Patch3:		libopensync-swig-fix.patch
 Patch4:		libopensync-0.22-unusedvar.patch
 Patch5:		libopensync-swig-fix2.patch
 Patch6:		libopensync-automake-1.13.patch
+Patch7:		libopensync-0.22-sqlite3-trace-v2.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake

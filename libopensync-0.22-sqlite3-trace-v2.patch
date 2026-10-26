@@ -1,0 +1,29 @@
+sqlite 3.14 removed sqlite3_trace(). SQLITE_TRACE_STMT passes the SQL as the last argument.
+
+--- libopensync-0.22/opensync/opensync_db.c
++++ libopensync-0.22/opensync/opensync_db.c
+@@ -26,6 +26,15 @@
+ 	osync_trace(TRACE_INTERNAL, "query executed: %s", query);
+ }
+ 
++static int osync_db_trace_v2(unsigned type, void *data, void *stmt, void *sql)
++{
++	(void)type;
++	(void)stmt;
++	if (sql)
++		osync_db_trace(data, sql);
++	return 0;
++}
++
+ OSyncDB *osync_db_open(char *filename, OSyncError **error)
+ {
+ 	osync_trace(TRACE_ENTRY, "%s(%s, %p)", __func__, filename, error);
+@@ -39,7 +48,7 @@
+ 		osync_error_set(error, OSYNC_ERROR_GENERIC, "Cannot open database: %s", sqlite3_errmsg(db->db));
+ 		goto error_close;
+ 	}
+-	sqlite3_trace(db->db, osync_db_trace, NULL);
++	sqlite3_trace_v2(db->db, SQLITE_TRACE_STMT, osync_db_trace_v2, NULL);
+ 	
+ 	osync_trace(TRACE_EXIT, "%s: %p", __func__, db);
+ 	return db;
