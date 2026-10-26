@@ -41,6 +41,7 @@ BuildRequires:	automake
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
+BuildRequires:	python
 BuildRequires:	bison
 BuildRequires:	chrpath
 BuildRequires:	swig
@@ -111,10 +112,13 @@ autoreconf -fi
 
 %build
 export CFLAGS="%{optflags} -Wno-error"
+export PYTHON=python
 %configure2_5x \
 	--disable-static \
 %if %{with_python}
 	--enable-python \
+%else
+	--disable-python \
 %endif
 	--disable-debug \
 	--enable-engine \
