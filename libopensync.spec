@@ -124,10 +124,10 @@ export PYTHON=python
 	--enable-engine \
 	--enable-tools
 
-%make pythondir=%{py_platsitedir}
-										
+%make pythondir=%{py_platsitedir} LIBTOOL=slibtool-shared
+
 %install
-%makeinstall_std pythondir=%{py_platsitedir}
+%makeinstall_std pythondir=%{py_platsitedir} LIBTOOL=slibtool-shared
 
 %files
 %{_bindir}/*
