@@ -10,7 +10,12 @@
 %define libosengine %mklibname osengine %{major}
 %define devname	%mklibname opensync -d
 
-%define with_python 1
+# The LTO configure workaround rewrites this ancient libtool script into a
+# command that starts with -e, so the shared library is never produced.
+%global _disable_lto 1
+
+# The bindings look for Python 2.7, which Cooker no longer has.
+%define with_python 0
 %{?_without_python: %{expand: %%global _with_python 0}}
 
 Summary:	Multi-platform PIM synchronization framework
